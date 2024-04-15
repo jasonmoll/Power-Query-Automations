@@ -1,0 +1,20 @@
+let
+    // Initialize query parameters
+    UserAlias = #"User Alias",
+
+    // Generic source path format for user-specific directory
+    SourcePath = "C:\Users\" & UserAlias & "\Path\To\Specific\Directory\",
+
+    // Retrieve files from the directory
+    DirectoryContent = Folder.Files(SourcePath),
+
+    // Placeholder for a generic CSV file name
+    FileName = "Generic_File_Name.csv",
+
+    // Access the specific file content from the directory
+    FileContent = DirectoryContent{[#"Folder Path"=SourcePath, Name=FileName]}[Content],
+
+    // Import the CSV file with specified settings
+    ImportedCSV = Csv.Document(FileContent, [Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.None]),
+in
+    ImportedCSV
